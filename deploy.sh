@@ -6,6 +6,7 @@ PROJECT_ID=${GCLOUD_PROJECT_ID:-continuous-intelligence}
 TENANT_NAMESPACE=${TENANT:-admin}
 echo "Deploying image version: $IMAGE_VERSION"
 
+cat kubernetes/web.yml | sed "s/\\\$tenant\\\$/$TENANT_NAMESPACE/" | sed "s/\(image: \).*$/\mhve\/ci-workshop-app:$TENANT_NAMESPACE/"
 cat kubernetes/web.yml | sed "s/\\\$tenant\\\$/$TENANT_NAMESPACE/" | sed "s/\(image: \).*$/\mhve\/ci-workshop-app:$TENANT_NAMESPACE/" | kubectl apply -f -
 
 external_ip=""
